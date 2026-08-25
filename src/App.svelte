@@ -12,7 +12,7 @@
   import PanitiaSoal from "./pages/panitia/Soal.svelte";
   import ToastContainer from "./components/ToastContainer.svelte";
 
-  export let url = "";
+  let { url = "" } = $props();
   
   let sessionChecked = $state(false);
 

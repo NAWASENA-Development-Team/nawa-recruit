@@ -25,6 +25,7 @@
       </div>
       <p class="text-body-sm font-medium leading-relaxed flex-grow">{toast.message}</p>
       <button 
+        aria-label="Tutup notifikasi"
         onclick={() => toastStore.remove(toast.id)} 
         class="flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity"
       >
