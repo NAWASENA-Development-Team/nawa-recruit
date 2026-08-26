@@ -17,6 +17,7 @@
   let selectedToRemove = $state<string[]>([]);
   
   let isSubmitting = $state(false);
+  let searchQuery = $state('');
 
   async function loadInitialData() {
     loading = true;
@@ -64,14 +65,16 @@
     candidates.filter(c => {
       // Find if candidate is assigned to ANY room in this stage
       const assignment = assignments.find(a => a.candidate_id === c.id);
-      return !assignment; // unassigned completely for this stage
+      const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return !assignment && matchesSearch; // unassigned completely for this stage
     })
   );
 
   let assignedToCurrentRoom = $derived(
     candidates.filter(c => {
       const assignment = assignments.find(a => a.candidate_id === c.id);
-      return assignment && assignment.room_id === selectedRoomId;
+      const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return assignment && assignment.room_id === selectedRoomId && matchesSearch;
     })
   );
 
@@ -187,6 +190,14 @@
     </div>
     
     {#if !loading && selectedStageId && selectedRoomId}
+      <div class="mb-6">
+        <input 
+          type="text" 
+          bind:value={searchQuery} 
+          placeholder="Cari nama kandidat..." 
+          class="w-full bg-paper border border-mist rounded-xl px-4 py-3 text-body-sm focus:outline-none focus:border-nawa-accent focus:ring-1 focus:ring-nawa-accent transition-all shadow-subtle"
+        />
+      </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         
         <!-- Left Side: Unassigned -->
