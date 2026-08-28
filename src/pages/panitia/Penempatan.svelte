@@ -129,19 +129,43 @@
     isSubmitting = false;
   }
   
-  function selectAllToAssign() {
-    if (selectedToAssign.length === unassignedCandidates.length) {
-      selectedToAssign = [];
+  function toggleAssign(id: string, checked: boolean) {
+    if (checked) {
+      if (!selectedToAssign.includes(id)) selectedToAssign = [...selectedToAssign, id];
     } else {
-      selectedToAssign = unassignedCandidates.map(c => c.id);
+      selectedToAssign = selectedToAssign.filter(x => x !== id);
+    }
+  }
+
+  function toggleRemove(id: string, checked: boolean) {
+    if (checked) {
+      if (!selectedToRemove.includes(id)) selectedToRemove = [...selectedToRemove, id];
+    } else {
+      selectedToRemove = selectedToRemove.filter(x => x !== id);
+    }
+  }
+
+  function selectAllToAssign() {
+    const visibleIds = unassignedCandidates.map(c => c.id);
+    const allVisibleSelected = visibleIds.length > 0 && visibleIds.every(id => selectedToAssign.includes(id));
+    
+    if (allVisibleSelected) {
+      selectedToAssign = selectedToAssign.filter(id => !visibleIds.includes(id));
+    } else {
+      const newSelections = visibleIds.filter(id => !selectedToAssign.includes(id));
+      selectedToAssign = [...selectedToAssign, ...newSelections];
     }
   }
   
   function selectAllToRemove() {
-    if (selectedToRemove.length === assignedToCurrentRoom.length) {
-      selectedToRemove = [];
+    const visibleIds = assignedToCurrentRoom.map(c => c.id);
+    const allVisibleSelected = visibleIds.length > 0 && visibleIds.every(id => selectedToRemove.includes(id));
+    
+    if (allVisibleSelected) {
+      selectedToRemove = selectedToRemove.filter(id => !visibleIds.includes(id));
     } else {
-      selectedToRemove = assignedToCurrentRoom.map(c => c.id);
+      const newSelections = visibleIds.filter(id => !selectedToRemove.includes(id));
+      selectedToRemove = [...selectedToRemove, ...newSelections];
     }
   }
 </script>
@@ -204,8 +228,10 @@
         <div class="bg-paper rounded-2xl border border-mist shadow-subtle overflow-hidden flex flex-col h-[600px]">
           <div class="p-4 border-b border-mist bg-linen/50 flex justify-between items-center">
             <h2 class="text-body-sm text-graphite font-medium">Belum Dialokasikan ({unassignedCandidates.length})</h2>
+            {@const visibleAssignIds = unassignedCandidates.map(c => c.id)}
+            {@const allVisibleSelectedAssign = visibleAssignIds.length > 0 && visibleAssignIds.every(id => selectedToAssign.includes(id))}
             <button onclick={selectAllToAssign} class="text-caption text-nawa-accent hover:underline">
-              {selectedToAssign.length === unassignedCandidates.length && unassignedCandidates.length > 0 ? 'Deselect All' : 'Select All'}
+              {allVisibleSelectedAssign ? 'Deselect All' : 'Select All'}
             </button>
           </div>
           <div class="overflow-y-auto flex-grow p-2">
@@ -214,7 +240,7 @@
             {/if}
             {#each unassignedCandidates as candidate}
               <label class="flex items-center gap-3 p-3 hover:bg-linen/50 rounded-lg cursor-pointer border border-transparent hover:border-mist transition-colors">
-                <input type="checkbox" bind:group={selectedToAssign} value={candidate.id} class="w-4 h-4 text-nawa-accent border-fog rounded focus:ring-nawa-accent" />
+                <input type="checkbox" checked={selectedToAssign.includes(candidate.id)} onchange={(e) => toggleAssign(candidate.id, e.currentTarget.checked)} class="w-4 h-4 text-nawa-accent border-fog rounded focus:ring-nawa-accent" />
                 <div>
                   <div class="text-body-sm text-charcoal font-medium">{candidate.name}</div>
                   <div class="text-caption text-ash">{candidate.class}</div>
@@ -240,8 +266,10 @@
         <div class="bg-paper rounded-2xl border border-nawa-accent shadow-subtle overflow-hidden flex flex-col h-[600px]">
           <div class="p-4 border-b border-mist bg-blue-50/30 flex justify-between items-center">
             <h2 class="text-body-sm text-graphite font-medium">Di Ruangan Ini ({assignedToCurrentRoom.length})</h2>
+            {@const visibleRemoveIds = assignedToCurrentRoom.map(c => c.id)}
+            {@const allVisibleSelectedRemove = visibleRemoveIds.length > 0 && visibleRemoveIds.every(id => selectedToRemove.includes(id))}
             <button onclick={selectAllToRemove} class="text-caption text-red-500 hover:underline">
-              {selectedToRemove.length === assignedToCurrentRoom.length && assignedToCurrentRoom.length > 0 ? 'Deselect All' : 'Select All'}
+              {allVisibleSelectedRemove ? 'Deselect All' : 'Select All'}
             </button>
           </div>
           <div class="overflow-y-auto flex-grow p-2">
@@ -250,7 +278,7 @@
             {/if}
             {#each assignedToCurrentRoom as candidate}
               <label class="flex items-center gap-3 p-3 hover:bg-red-50/50 rounded-lg cursor-pointer border border-transparent hover:border-red-100 transition-colors">
-                <input type="checkbox" bind:group={selectedToRemove} value={candidate.id} class="w-4 h-4 text-red-500 border-fog rounded focus:ring-red-500" />
+                <input type="checkbox" checked={selectedToRemove.includes(candidate.id)} onchange={(e) => toggleRemove(candidate.id, e.currentTarget.checked)} class="w-4 h-4 text-red-500 border-fog rounded focus:ring-red-500" />
                 <div>
                   <div class="text-body-sm text-charcoal font-medium">{candidate.name}</div>
                   <div class="text-caption text-ash">{candidate.class}</div>
