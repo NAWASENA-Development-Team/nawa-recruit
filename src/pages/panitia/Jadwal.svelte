@@ -14,6 +14,7 @@
   let selectedRoomId = $state('');
   let selectedTester1Id = $state('');
   let selectedTester2Id = $state('');
+  let selectedTester3Id = $state('');
   let isSubmitting = $state(false);
 
   async function loadData() {
@@ -28,7 +29,8 @@
         stage:stages(name),
         room:rooms(name),
         tester1:users!tester_1_id(name),
-        tester2:users!tester_2_id(name)
+        tester2:users!tester_2_id(name),
+        tester3:users!tester_3_id(name)
       `).order('created_at', { ascending: false })
     ]);
 
@@ -47,8 +49,10 @@
   async function assignTesters(e: Event) {
     e.preventDefault();
     if (!selectedStageId || !selectedRoomId || !selectedTester1Id || !selectedTester2Id) return;
-    if (selectedTester1Id === selectedTester2Id) {
-      toastStore.error("Penguji 1 dan Penguji 2 tidak boleh orang yang sama.");
+    
+    if (selectedTester1Id === selectedTester2Id || 
+        (selectedTester3Id && (selectedTester1Id === selectedTester3Id || selectedTester2Id === selectedTester3Id))) {
+      toastStore.error("Penguji tidak boleh orang yang sama di dalam satu ruangan.");
       return;
     }
     
@@ -60,14 +64,16 @@
         stage_id: selectedStageId,
         room_id: selectedRoomId,
         tester_1_id: selectedTester1Id,
-        tester_2_id: selectedTester2Id
+        tester_2_id: selectedTester2Id,
+        tester_3_id: selectedTester3Id || null
       }, { onConflict: 'stage_id,room_id' })
       .select(`
         *,
         stage:stages(name),
         room:rooms(name),
         tester1:users!tester_1_id(name),
-        tester2:users!tester_2_id(name)
+        tester2:users!tester_2_id(name),
+        tester3:users!tester_3_id(name)
       `);
 
     if (!error && data) {
@@ -79,6 +85,7 @@
       selectedRoomId = '';
       selectedTester1Id = '';
       selectedTester2Id = '';
+      selectedTester3Id = '';
       toastStore.success('Jadwal penguji berhasil disimpan!');
     } else {
       toastStore.error("Terjadi kesalahan: " + (error?.message || ""));
@@ -168,6 +175,20 @@
                 {/each}
               </select>
             </div>
+
+            <div class="space-y-1">
+              <label for="tester3" class="text-caption text-charcoal font-medium font-sans">Penguji 3 (Opsional)</label>
+              <select 
+                id="tester3"
+                bind:value={selectedTester3Id}
+                class="w-full bg-linen border-b border-charcoal text-charcoal px-4 py-3 text-body-sm focus:outline-none focus:border-nawa-accent focus:ring-0 transition-colors appearance-none"
+              >
+                <option value="">Tidak ada</option>
+                {#each testers as tester}
+                  <option value={tester.id}>{tester.name}</option>
+                {/each}
+              </select>
+            </div>
             
             <button 
               type="submit" 
@@ -216,6 +237,11 @@
                           <span class="inline-flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-twilight"></span> {assignment.tester2?.name || '-'}
                           </span>
+                          {#if assignment.tester3}
+                          <span class="inline-flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> {assignment.tester3.name}
+                          </span>
+                          {/if}
                         </div>
                       </td>
                     </tr>
