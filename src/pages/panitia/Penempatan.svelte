@@ -78,6 +78,16 @@
     })
   );
 
+  let allVisibleSelectedAssign = $derived(
+    unassignedCandidates.length > 0 && 
+    unassignedCandidates.every(c => selectedToAssign.includes(c.id))
+  );
+
+  let allVisibleSelectedRemove = $derived(
+    assignedToCurrentRoom.length > 0 && 
+    assignedToCurrentRoom.every(c => selectedToRemove.includes(c.id))
+  );
+
   onMount(() => {
     loadInitialData();
   });
@@ -228,8 +238,6 @@
         <div class="bg-paper rounded-2xl border border-mist shadow-subtle overflow-hidden flex flex-col h-[600px]">
           <div class="p-4 border-b border-mist bg-linen/50 flex justify-between items-center">
             <h2 class="text-body-sm text-graphite font-medium">Belum Dialokasikan ({unassignedCandidates.length})</h2>
-            {@const visibleAssignIds = unassignedCandidates.map(c => c.id)}
-            {@const allVisibleSelectedAssign = visibleAssignIds.length > 0 && visibleAssignIds.every(id => selectedToAssign.includes(id))}
             <button onclick={selectAllToAssign} class="text-caption text-nawa-accent hover:underline">
               {allVisibleSelectedAssign ? 'Deselect All' : 'Select All'}
             </button>
@@ -266,8 +274,6 @@
         <div class="bg-paper rounded-2xl border border-nawa-accent shadow-subtle overflow-hidden flex flex-col h-[600px]">
           <div class="p-4 border-b border-mist bg-blue-50/30 flex justify-between items-center">
             <h2 class="text-body-sm text-graphite font-medium">Di Ruangan Ini ({assignedToCurrentRoom.length})</h2>
-            {@const visibleRemoveIds = assignedToCurrentRoom.map(c => c.id)}
-            {@const allVisibleSelectedRemove = visibleRemoveIds.length > 0 && visibleRemoveIds.every(id => selectedToRemove.includes(id))}
             <button onclick={selectAllToRemove} class="text-caption text-red-500 hover:underline">
               {allVisibleSelectedRemove ? 'Deselect All' : 'Select All'}
             </button>
