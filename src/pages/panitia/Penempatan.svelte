@@ -43,7 +43,7 @@
   async function loadAssignmentsForStage(stageId: string) {
     const { data, error } = await supabase
       .from('candidate_room_assignments')
-      .select('candidate_id, room_id')
+      .select('candidate_id, room_id, stage_id')
       .eq('stage_id', stageId);
       
     if (data) assignments = data;
