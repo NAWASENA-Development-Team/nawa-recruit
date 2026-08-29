@@ -18,16 +18,14 @@
     
     // Langsung ambil data matang dari Database View! Beban 0 di browser.
     const { data: candidatesData, error: cErr } = await supabase
-      .from('leaderboard_view')
+      .from('leaderboard_stage_3_view')
       .select('*')
-      .order('final_score', { ascending: false });
+      .order('score_stage_3', { ascending: false });
       
     if (!cErr && candidatesData) {
       candidates = candidatesData.map((c: any) => ({
         ...c,
-        scoreStage1: Number(c.score_stage_1),
-        scoreStage2: Number(c.score_stage_2),
-        finalScore: Number(c.final_score),
+        scoreStage3: Number(c.score_stage_3),
         isComplete: c.is_complete
       }));
     }
@@ -67,18 +65,18 @@
 </script>
 
 <svelte:head>
-  <title>Leaderboard Penyisihan | Nawa-Recruit</title>
+  <title>Leaderboard Final (Tahap III) | Nawa-Recruit</title>
 </svelte:head>
 
 <div class="min-h-screen bg-parchment p-4 md:p-8">
   <div class="max-w-page mx-auto">
     <header class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8 md:mb-12">
       <div>
-        <button onclick={() => navigate('/panitia/dashboard')} class="text-ash text-caption hover:text-charcoal mb-2 inline-flex items-center active:scale-95 transition-transform">
-          ← Kembali ke Dashboard
+        <button onclick={() => navigate('/panitia/leaderboard')} class="text-ash text-caption hover:text-charcoal mb-2 inline-flex items-center active:scale-95 transition-transform">
+          ← Kembali ke Leaderboard Penyisihan
         </button>
         <div class="flex items-center gap-3">
-          <h1 class="text-heading-sm md:text-heading text-graphite font-serif tracking-tight">Leaderboard Penyisihan (I & II)</h1>
+          <h1 class="text-heading-sm md:text-heading text-graphite font-serif tracking-tight">Leaderboard Final (Tahap III)</h1>
           {#if isUpdating}
             <div class="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-full shadow-sm animate-pulse">
               <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
@@ -86,11 +84,6 @@
             </div>
           {/if}
         </div>
-      </div>
-      <div class="flex gap-4">
-        <button onclick={() => navigate('/panitia/leaderboard-final')} class="px-6 py-2 rounded-full border border-nawa-accent text-nawa-accent font-medium text-body-sm hover:bg-blue-50 transition-colors active:scale-95">
-          Lihat Leaderboard Tahap III →
-        </button>
       </div>
     </header>
     
@@ -107,9 +100,7 @@
                 <th class="px-6 py-4 font-medium border-b border-mist w-16 text-center">Rank</th>
                 <th class="px-6 py-4 font-medium border-b border-mist">Nama Kandidat</th>
                 <th class="px-6 py-4 font-medium border-b border-mist">Kelas</th>
-                <th class="px-6 py-4 font-medium border-b border-mist text-right">Tahap I</th>
-                <th class="px-6 py-4 font-medium border-b border-mist text-right">Tahap II</th>
-                <th class="px-6 py-4 font-medium border-b border-mist text-right">Nilai Akhir</th>
+                <th class="px-6 py-4 font-medium border-b border-mist text-right">Tahap III</th>
                 <th class="px-6 py-4 font-medium border-b border-mist text-center">Status</th>
               </tr>
             </thead>
@@ -130,13 +121,7 @@
                   <td class="px-6 py-4 text-charcoal text-body-sm font-medium">{candidate.name}</td>
                   <td class="px-6 py-4 text-ash text-body-sm">{candidate.class}</td>
                   <td class="px-6 py-4 text-right">
-                    <span class="text-body-sm text-graphite">{candidate.scoreStage1.toFixed(2)}</span>
-                  </td>
-                  <td class="px-6 py-4 text-right">
-                    <span class="text-body-sm text-graphite">{candidate.scoreStage2.toFixed(2)}</span>
-                  </td>
-                  <td class="px-6 py-4 text-right">
-                    <span class="text-subheading font-serif text-nawa-accent">{candidate.finalScore.toFixed(2)}</span>
+                    <span class="text-subheading font-serif text-nawa-accent">{candidate.scoreStage3.toFixed(2)}</span>
                   </td>
                   <td class="px-6 py-4 text-center">
                     {#if candidate.isComplete}

@@ -8,6 +8,7 @@
   import PanitiaKandidat from "./pages/panitia/Kandidat.svelte";
   import PanitiaJadwal from "./pages/panitia/Jadwal.svelte";
   import PanitiaLeaderboard from "./pages/panitia/Leaderboard.svelte";
+  import PanitiaLeaderboardFinal from "./pages/panitia/LeaderboardFinal.svelte";
   import PanitiaPenempatan from "./pages/panitia/Penempatan.svelte";
   import PanitiaSoal from "./pages/panitia/Soal.svelte";
   import ToastContainer from "./components/ToastContainer.svelte";
@@ -53,6 +54,7 @@
     <Route path="/panitia/jadwal"><PanitiaJadwal /></Route>
     <Route path="/panitia/penempatan"><PanitiaPenempatan /></Route>
     <Route path="/panitia/leaderboard"><PanitiaLeaderboard /></Route>
+    <Route path="/panitia/leaderboard-final"><PanitiaLeaderboardFinal /></Route>
     <Route path="/penguji/dashboard"><DashboardPenguji /></Route>
   </Router>
 {/if}
