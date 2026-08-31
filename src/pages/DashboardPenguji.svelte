@@ -11,8 +11,13 @@
   let loading = $state(true);
   
   let selectedCandidate = $state<any>(null);
-  let scores = $state<Record<string, number>>({});
+  let scores = $state<Record<string, number | string>>({});
   let isSubmitting = $state(false);
+  
+  let isAllScoresFilled = $derived(
+    scoringCriteria.length > 0 &&
+    scoringCriteria.every(crit => scores[crit.id] !== '' && scores[crit.id] !== null && scores[crit.id] !== undefined)
+  );
   
   let realtimeChannel: any;
 
@@ -92,7 +97,7 @@
     selectedCandidate = c;
     scores = {};
     scoringCriteria.forEach(crit => {
-      scores[crit.id] = 0; // initialize
+      scores[crit.id] = ''; // initialize as empty to force input
     });
     // Scroll to top automatically on mobile when a candidate is selected
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -184,7 +189,7 @@
                   <p class="text-caption text-ash">Semua kandidat sudah dinilai!</p>
                 </div>
               {:else}
-                {#each candidates as candidate}
+                {#each candidates as candidate (candidate.id)}
                   <button 
                     onclick={() => selectCandidate(candidate)}
                     class={`w-full text-left px-4 py-3 rounded-xl border active:scale-[0.98] transition-all shadow-sm ${selectedCandidate?.id === candidate.id ? 'border-nawa-accent bg-blue-50/50' : 'border-mist hover:border-fog bg-white'}`}
@@ -269,7 +274,8 @@
                         <div class="w-full sm:w-auto px-4 py-3 rounded-xl border border-mist bg-linen/50 flex items-center gap-3 shadow-subtle-2">
                           <span class="text-caption text-ash">Nilai Mutu:</span>
                           <span class="text-subheading font-serif font-bold text-graphite">
-                            {#if scores[criteria.id] >= 96} <span class="text-yellow-600">S</span> (Khusus)
+                            {#if scores[criteria.id] === '' || scores[criteria.id] === undefined} <span class="text-ash">-</span>
+                            {:else if scores[criteria.id] >= 96} <span class="text-yellow-600">S</span> (Khusus)
                             {:else if scores[criteria.id] >= 85} <span class="text-green-600">A</span>
                             {:else if scores[criteria.id] >= 73} <span class="text-blue-600">B</span>
                             {:else if scores[criteria.id] >= 63} <span class="text-orange-500">C</span>
@@ -286,8 +292,8 @@
               <div class="p-5 md:p-6 border-t border-mist bg-linen/30 flex-shrink-0">
                 <button 
                   type="submit" 
-                  disabled={isSubmitting || scoringCriteria.length === 0}
-                  class="w-full flex items-center justify-center rounded-xl bg-twilight text-white py-4 font-medium text-body-sm hover:bg-dusk active:scale-[0.98] transition-all shadow-sm disabled:opacity-50"
+                  disabled={isSubmitting || !isAllScoresFilled}
+                  class="w-full flex items-center justify-center rounded-xl bg-twilight text-white py-4 font-medium text-body-sm hover:bg-dusk active:scale-[0.98] transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? 'Menyimpan...' : 'Kirim Lembar Penilaian'}
                 </button>
