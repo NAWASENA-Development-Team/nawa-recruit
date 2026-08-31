@@ -139,10 +139,12 @@
                     <span class="text-subheading font-serif text-nawa-accent">{candidate.finalScore.toFixed(2)}</span>
                   </td>
                   <td class="px-6 py-4 text-center">
-                    {#if candidate.isComplete}
-                      <span class="px-3 py-1 rounded-full text-caption border border-green-200 bg-green-50 text-green-700">Lengkap</span>
-                    {:else}
+                    {#if candidate.scoreStage1 > 0 && candidate.scoreStage2 > 0}
+                      <span class="px-3 py-1 rounded-full text-caption border border-green-200 bg-green-50 text-green-700">Tuntas</span>
+                    {:else if candidate.scoreStage1 > 0}
                       <span class="px-3 py-1 rounded-full text-caption border border-yellow-200 bg-yellow-50 text-yellow-700">Menunggu</span>
+                    {:else}
+                      <span class="px-3 py-1 rounded-full text-caption border border-gray-200 bg-gray-50 text-gray-700">Belum</span>
                     {/if}
                   </td>
                 </tr>

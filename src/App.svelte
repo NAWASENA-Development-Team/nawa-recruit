@@ -11,6 +11,7 @@
   import PanitiaLeaderboardFinal from "./pages/panitia/LeaderboardFinal.svelte";
   import PanitiaPenempatan from "./pages/panitia/Penempatan.svelte";
   import PanitiaSoal from "./pages/panitia/Soal.svelte";
+  import PanitiaSeleksiTahap3 from "./pages/panitia/SeleksiTahap3.svelte";
   import ToastContainer from "./components/ToastContainer.svelte";
 
   let { url = "" } = $props();
@@ -53,6 +54,7 @@
     <Route path="/panitia/soal"><PanitiaSoal /></Route>
     <Route path="/panitia/jadwal"><PanitiaJadwal /></Route>
     <Route path="/panitia/penempatan"><PanitiaPenempatan /></Route>
+    <Route path="/panitia/seleksi-tahap-3"><PanitiaSeleksiTahap3 /></Route>
     <Route path="/panitia/leaderboard"><PanitiaLeaderboard /></Route>
     <Route path="/panitia/leaderboard-final"><PanitiaLeaderboardFinal /></Route>
     <Route path="/penguji/dashboard"><DashboardPenguji /></Route>

@@ -66,6 +66,15 @@
           Lihat Ranking →
         </button>
       </div>
+
+      <!-- Seleksi Tahap 3 -->
+      <div class="bg-paper rounded-2xl p-6 border border-mist shadow-subtle flex flex-col h-full">
+        <h2 class="text-subheading text-graphite font-serif mb-2">Seleksi Tahap III</h2>
+        <p class="text-caption text-ash mb-6 flex-grow">Tentukan kandidat yang lolos ke Tahap III.</p>
+        <button onclick={() => navigate('/panitia/seleksi-tahap-3')} class="w-full text-center rounded-lg border border-nawa-accent text-nawa-accent py-2 px-4 font-medium text-body-sm hover:bg-blue-50 active:scale-95 transition-all">
+          Atur Kelayakan →
+        </button>
+      </div>
     </div>
   </div>
 </div>
