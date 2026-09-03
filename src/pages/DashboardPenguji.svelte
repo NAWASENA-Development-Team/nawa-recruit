@@ -33,7 +33,7 @@
     const { data: myAssignments } = await supabase
       .from('stage_room_assignments')
       .select(`*, stage:stages(id, name), room:rooms(name)`)
-      .or(`tester_1_id.eq.${user.id},tester_2_id.eq.${user.id},tester_3_id.eq.${user.id}`);
+      .or(`tester_1_id.eq.${user.id},tester_2_id.eq.${user.id}`);
       
     if (myAssignments && myAssignments.length > 0) {
       assignments = myAssignments;

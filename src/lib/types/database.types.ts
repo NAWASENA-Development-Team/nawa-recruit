@@ -99,7 +99,6 @@ export interface Database {
           room_id: string
           tester_1_id: string
           tester_2_id: string
-          tester_3_id: string | null
           created_at: string
         }
         Insert: {
@@ -108,7 +107,6 @@ export interface Database {
           room_id: string
           tester_1_id: string
           tester_2_id: string
-          tester_3_id?: string | null
           created_at?: string
         }
         Update: {
@@ -117,7 +115,6 @@ export interface Database {
           room_id?: string
           tester_1_id?: string
           tester_2_id?: string
-          tester_3_id?: string | null
           created_at?: string
         }
       }
