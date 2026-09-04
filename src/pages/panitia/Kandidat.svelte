@@ -3,9 +3,11 @@
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../lib/supabase/client';
   import { toastStore } from '../../lib/toast.svelte';
+  import type { Database } from '../../lib/types/database.types';
   
-  // Svelte 5 runes for state
-  let candidates = $state<any[]>([]);
+  type Candidate = Database['public']['Tables']['candidates']['Row']
+  
+  let candidates = $state<Candidate[]>([]);
   let loading = $state(true);
   
   // Form state
@@ -68,7 +70,7 @@
       const workbook = XLSX.read(buffer, { type: 'array' });
       const firstSheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[firstSheetName];
-      const rows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      const rows: (string | number | boolean | null)[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
       
       if (rows.length <= 1) {
         toastStore.error("File Excel kosong atau hanya berisi header.");
@@ -80,7 +82,7 @@
       // Hapus header
       rows.shift();
       
-      const inserts = rows.map((row: any[]) => {
+      const inserts = rows.map((row) => {
         const name = String(row[0] || '').trim();
         const classStr = String(row[1] || '').trim();
         
@@ -108,8 +110,9 @@
       } else {
         toastStore.error("Gagal mengimpor: " + error?.message);
       }
-    } catch (err: any) {
-      toastStore.error("Gagal membaca file Excel. Error: " + err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      toastStore.error("Gagal membaca file Excel. Error: " + message);
     }
     
     isImporting = false;

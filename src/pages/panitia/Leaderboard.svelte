@@ -2,12 +2,22 @@
   import { onMount, onDestroy } from 'svelte';
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../lib/supabase/client';
+  import type { Database } from '../../lib/types/database.types';
   
-  let candidates = $state<any[]>([]);
+  type LeaderboardRow = Database['public']['Views']['leaderboard_view']['Row']
+  
+  interface CandidateWithScores extends LeaderboardRow {
+    scoreStage1: number
+    scoreStage2: number
+    finalScore: number
+    isComplete: boolean
+  }
+  
+  let candidates = $state<CandidateWithScores[]>([]);
   let loading = $state(true);
   let isUpdating = $state(false);
-  let realtimeChannel: any;
-  let debounceTimer: any;
+  let realtimeChannel: ReturnType<typeof supabase.channel> | null = null;
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   
   async function fetchLeaderboard(silent = false) {
     if (!silent) {
@@ -23,7 +33,7 @@
       .order('final_score', { ascending: false });
       
     if (!cErr && candidatesData) {
-      candidates = candidatesData.map((c: any) => ({
+      candidates = candidatesData.map((c) => ({
         ...c,
         scoreStage1: Number(c.score_stage_1),
         scoreStage2: Number(c.score_stage_2),

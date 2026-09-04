@@ -3,11 +3,17 @@
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../lib/supabase/client';
   import { toastStore } from '../../lib/toast.svelte';
+  import type { Database } from '../../lib/types/database.types';
   
-  let stages = $state<any[]>([]);
-  let rooms = $state<any[]>([]);
-  let candidates = $state<any[]>([]);
-  let assignments = $state<any[]>([]); // candidate_id, stage_id, room_id
+  type Stage = Database['public']['Tables']['stages']['Row']
+  type Room = Database['public']['Tables']['rooms']['Row']
+  type Candidate = Database['public']['Tables']['candidates']['Row']
+  type CandidateRoomAssignment = Database['public']['Tables']['candidate_room_assignments']['Row']
+  
+  let stages = $state<Stage[]>([]);
+  let rooms = $state<Room[]>([]);
+  let candidates = $state<Candidate[]>([]);
+  let assignments = $state<CandidateRoomAssignment[]>([]);
   let loading = $state(true);
   
   let selectedStageId = $state('');

@@ -198,7 +198,26 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      leaderboard_view: {
+        Row: {
+          id: string
+          name: string
+          class: string
+          score_stage_1: number
+          score_stage_2: number
+          final_score: number
+          is_complete: boolean
+        }
+      }
+      leaderboard_stage_3_view: {
+        Row: {
+          id: string
+          name: string
+          class: string
+          score_stage_3: number
+          is_complete: boolean
+        }
+      }
     }
     Functions: {
       [_ in never]: never

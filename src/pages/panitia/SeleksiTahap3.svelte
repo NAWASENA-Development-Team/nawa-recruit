@@ -3,8 +3,16 @@
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../lib/supabase/client';
   import { toastStore } from '../../lib/toast.svelte';
+  import type { Database } from '../../lib/types/database.types';
   
-  let candidates = $state<any[]>([]);
+  type LeaderboardRow = Database['public']['Views']['leaderboard_view']['Row']
+  
+  interface CandidateWithEligibility extends LeaderboardRow {
+    finalScore: number
+    isEligible: boolean
+  }
+  
+  let candidates = $state<CandidateWithEligibility[]>([]);
   let loading = $state(true);
   
   async function loadCandidates() {
@@ -25,7 +33,7 @@
       // Gabungkan data
       const eligibilityMap = new Map(candidatesData.map(c => [c.id, c.is_eligible_stage_3]));
       
-      candidates = leaderboardData.map((c: any) => ({
+      candidates = leaderboardData.map((c) => ({
         ...c,
         finalScore: Number(c.final_score),
         isEligible: eligibilityMap.get(c.id) || false

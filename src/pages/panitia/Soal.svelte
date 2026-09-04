@@ -3,9 +3,13 @@
   import { navigate } from 'svelte-routing';
   import { supabase } from '../../lib/supabase/client';
   import { toastStore } from '../../lib/toast.svelte';
+  import type { Database } from '../../lib/types/database.types';
   
-  let stages = $state<any[]>([]);
-  let scoringCriteria = $state<any[]>([]); // We use scoring_criteria table to store Soal
+  type Stage = Database['public']['Tables']['stages']['Row']
+  type ScoringCriteria = Database['public']['Tables']['scoring_criteria']['Row']
+  
+  let stages = $state<Stage[]>([]);
+  let scoringCriteria = $state<ScoringCriteria[]>([]);
   let loading = $state(true);
   
   let selectedStageId = $state('');
@@ -94,8 +98,8 @@
       
       // Split by newline and filter empty
       const lines = text.split('\n')
-        .map((line: string) => line.trim())
-        .filter((line: string) => line.length > 3); // Must have some length
+        .map((line) => line.trim())
+        .filter((line) => line.length > 3);
 
       if (lines.length === 0) {
         toastStore.error("Tidak ada soal yang terdeteksi di dokumen Word.");
@@ -104,7 +108,7 @@
         return;
       }
 
-      const inserts = lines.map((q: string) => ({
+      const inserts = lines.map((q) => ({
         stage_id: selectedStageId,
         name: q,
         weight: 1
@@ -121,8 +125,9 @@
       } else {
         toastStore.error("Gagal mengimpor: " + error?.message);
       }
-    } catch (err: any) {
-      toastStore.error("Gagal membaca file Word (.docx). Error: " + err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      toastStore.error("Gagal membaca file Word (.docx). Error: " + message);
     }
     
     isImporting = false;

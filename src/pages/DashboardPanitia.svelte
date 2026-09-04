@@ -113,7 +113,7 @@
         <div class="h-px bg-mist flex-grow"></div>
       </div>
 
-      <div class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden" onclick={() => navigate('/panitia/kandidat')}>
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/kandidat')}>
         <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-blue-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6 text-nawa-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -124,9 +124,9 @@
           Buka Data Master
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
       
-      <div class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden" onclick={() => navigate('/panitia/soal')}>
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/soal')}>
         <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-indigo-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -137,7 +137,7 @@
           Atur Kriteria
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
 
       <!-- Group: Alokasi & Operasional -->
       <div class="lg:col-span-3 mb-2 mt-4 flex items-center gap-4">
@@ -146,7 +146,7 @@
         <div class="h-px bg-mist flex-grow"></div>
       </div>
 
-      <div class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden" onclick={() => navigate('/panitia/penempatan')}>
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/penempatan')}>
         <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-orange-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
@@ -157,9 +157,9 @@
           Atur Penempatan
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
 
-      <div class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden" onclick={() => navigate('/panitia/jadwal')}>
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/jadwal')}>
         <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-purple-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
@@ -170,7 +170,7 @@
           Atur Jadwal Penguji
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
       
       <!-- Group: Hasil & Pemantauan -->
       <div class="lg:col-span-3 mb-2 mt-4 flex items-center gap-4">
@@ -179,7 +179,7 @@
         <div class="h-px bg-mist flex-grow"></div>
       </div>
 
-      <div class="group bg-twilight rounded-2xl p-6 border border-dusk shadow-md hover:shadow-lg transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-white" onclick={() => navigate('/panitia/leaderboard')}>
+      <button type="button" class="group bg-twilight rounded-2xl p-6 border border-dusk shadow-md hover:shadow-lg transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-white text-left w-full" onclick={() => navigate('/panitia/leaderboard')}>
         <div class="absolute right-0 top-0 w-32 h-32 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform border border-white/5">
           <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
@@ -190,9 +190,9 @@
           Lihat Ranking
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
 
-      <div class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden" onclick={() => navigate('/panitia/seleksi-tahap-3')}>
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/seleksi-tahap-3')}>
         <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-green-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
         <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
@@ -203,7 +203,7 @@
           Saring Kandidat
           <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </div>
-      </div>
+      </button>
 
     </div>
   </div>

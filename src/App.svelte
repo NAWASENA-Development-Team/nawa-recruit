@@ -14,22 +14,25 @@
   import PanitiaSeleksiTahap3 from "./pages/panitia/SeleksiTahap3.svelte";
   import ToastContainer from "./components/ToastContainer.svelte";
 
+  const PUBLIC_ROUTES = ['/'];
+  
   let { url = "" } = $props();
   
   let sessionChecked = $state(false);
 
+  function isPublicRoute(pathname: string): boolean {
+    return PUBLIC_ROUTES.includes(pathname);
+  }
+
   onMount(async () => {
-    // Cek sesi aktif
     const { data } = await supabase.auth.getSession();
     
-    // Jika tidak ada sesi dan user tidak di halaman login, tendang ke login
-    if (!data.session?.user && window.location.pathname !== '/') {
+    if (!data.session?.user && !isPublicRoute(window.location.pathname)) {
       navigate("/", { replace: true });
     }
 
-    // Dengarkan perubahan status login (logout otomatis dll)
     supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session?.user && window.location.pathname !== '/') {
+      if (!session?.user && !isPublicRoute(window.location.pathname)) {
         navigate("/", { replace: true });
       }
     });

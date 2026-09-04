@@ -3,14 +3,22 @@
   import { navigate } from 'svelte-routing';
   import { supabase } from '../lib/supabase/client';
   import { toastStore } from '../lib/toast.svelte';
+  import type { Database } from '../lib/types/database.types';
   
-  let user: any = $state(null);
-  let assignments = $state<any[]>([]);
-  let candidates = $state<any[]>([]);
-  let scoringCriteria = $state<any[]>([]);
+  type StageRoomAssignment = Database['public']['Tables']['stage_room_assignments']['Row'] & {
+    stage: Database['public']['Tables']['stages']['Row'] | null
+    room: Database['public']['Tables']['rooms']['Row'] | null
+  }
+  type ScoringCriteria = Database['public']['Tables']['scoring_criteria']['Row']
+  type Candidate = Database['public']['Tables']['candidates']['Row']
+  
+  let user: { id: string; email?: string } | null = $state(null);
+  let assignments = $state<StageRoomAssignment[]>([]);
+  let candidates = $state<Candidate[]>([]);
+  let scoringCriteria = $state<ScoringCriteria[]>([]);
   let loading = $state(true);
   
-  let selectedCandidate = $state<any>(null);
+  let selectedCandidate = $state<Candidate | null>(null);
   let scores = $state<Record<string, number | string>>({});
   let isSubmitting = $state(false);
   
@@ -19,7 +27,7 @@
     scoringCriteria.every(crit => scores[crit.id] !== '' && scores[crit.id] !== null && scores[crit.id] !== undefined)
   );
   
-  let realtimeChannel: any;
+  let realtimeChannel: ReturnType<typeof supabase.channel> | null = null;
 
   async function loadDashboard() {
     loading = true;
@@ -51,15 +59,15 @@
         .eq('stage_id', activeAssignment.stage_id)
         .eq('room_id', activeAssignment.room_id);
       if (roomCandidates) {
-        // Filter out candidates that have already been graded in this stage
-        // Fetch existing scores for this stage
         const { data: existingScores } = await supabase
           .from('scores')
           .select('candidate_id')
           .eq('stage_id', activeAssignment.stage_id);
           
         const gradedIds = new Set(existingScores?.map(s => s.candidate_id) || []);
-        candidates = roomCandidates.map((c: any) => c.candidate).filter(c => !gradedIds.has(c.id));
+        candidates = roomCandidates
+          .map((c) => c.candidate as unknown as Candidate)
+          .filter((c): c is Candidate => c !== null && !gradedIds.has(c.id));
       }
       
       // Setup Realtime Subscription
@@ -93,13 +101,12 @@
     }
   });
   
-  function selectCandidate(c: any) {
+  function selectCandidate(c: Candidate) {
     selectedCandidate = c;
     scores = {};
     scoringCriteria.forEach(crit => {
-      scores[crit.id] = ''; // initialize as empty to force input
+      scores[crit.id] = '';
     });
-    // Scroll to top automatically on mobile when a candidate is selected
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -118,8 +125,7 @@
       stage_id: stageId,
       criteria_id: criteriaId,
       scorer_user_id: user.id,
-      // @ts-ignore
-      score: parseFloat(scores[criteriaId])
+      score: parseFloat(String(scores[criteriaId]))
     }));
     
     const { error } = await supabase
