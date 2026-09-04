@@ -59,9 +59,9 @@
     <Route path="/panitia/jadwal"><PanitiaJadwal /></Route>
     <Route path="/panitia/penempatan"><PanitiaPenempatan /></Route>
     <Route path="/panitia/seleksi-tahap-3"><PanitiaSeleksiTahap3 /></Route>
-    <Route path="/panitia/penilaian-video"><PanitiaVideoScoring /></Route>
     <Route path="/panitia/leaderboard"><PanitiaLeaderboard /></Route>
     <Route path="/panitia/leaderboard-final"><PanitiaLeaderboardFinal /></Route>
+    <Route path="/panitia/penilaian-video"><PanitiaVideoScoring /></Route>
     <Route path="/penguji/dashboard"><DashboardPenguji /></Route>
   </Router>
 {/if}
