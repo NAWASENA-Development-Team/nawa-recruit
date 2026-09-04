@@ -9,6 +9,8 @@
   interface CandidateWithScores extends LeaderboardRow {
     scoreStage1: number
     scoreStage2: number
+    scoreVideo: number
+    avgStage12: number
     finalScore: number
     isComplete: boolean
   }
@@ -26,7 +28,6 @@
       isUpdating = true;
     }
     
-    // Langsung ambil data matang dari Database View! Beban 0 di browser.
     const { data: candidatesData, error: cErr } = await supabase
       .from('leaderboard_view')
       .select('*')
@@ -37,6 +38,8 @@
         ...c,
         scoreStage1: Number(c.score_stage_1),
         scoreStage2: Number(c.score_stage_2),
+        scoreVideo: Number(c.score_video),
+        avgStage12: Number(c.avg_stage_1_2),
         finalScore: Number(c.final_score),
         isComplete: c.is_complete
       }));
@@ -50,7 +53,6 @@
   }
 
   function handleRealtimeUpdate() {
-    // Gunakan debounce agar tidak spam fetch jika ada insert massal (misal 5 kriteria diisi bersamaan)
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
       fetchLeaderboard(true);
@@ -60,11 +62,15 @@
   onMount(() => {
     fetchLeaderboard();
     
-    // Subscribe ke perubahan di tabel scores
     realtimeChannel = supabase.channel('leaderboard-live')
       .on(
         'postgres_changes',
         { event: '*', schema: 'public', table: 'scores' },
+        () => handleRealtimeUpdate()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'video_scores' },
         () => handleRealtimeUpdate()
       )
       .subscribe();
@@ -119,6 +125,8 @@
                 <th class="px-6 py-4 font-medium border-b border-mist">Kelas</th>
                 <th class="px-6 py-4 font-medium border-b border-mist text-right">Tahap I</th>
                 <th class="px-6 py-4 font-medium border-b border-mist text-right">Tahap II</th>
+                <th class="px-6 py-4 font-medium border-b border-mist text-right">Video</th>
+                <th class="px-6 py-4 font-medium border-b border-mist text-right">Rata-rata I+II</th>
                 <th class="px-6 py-4 font-medium border-b border-mist text-right">Nilai Akhir</th>
                 <th class="px-6 py-4 font-medium border-b border-mist text-center">Status</th>
               </tr>
@@ -144,6 +152,16 @@
                   </td>
                   <td class="px-6 py-4 text-right">
                     <span class="text-body-sm text-graphite">{candidate.scoreStage2.toFixed(2)}</span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    {#if candidate.scoreVideo > 0}
+                      <span class="text-body-sm text-pink-600 font-medium">{candidate.scoreVideo.toFixed(2)}</span>
+                    {:else}
+                      <span class="text-body-sm text-ash/50">-</span>
+                    {/if}
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <span class="text-body-sm text-graphite">{candidate.avgStage12.toFixed(2)}</span>
                   </td>
                   <td class="px-6 py-4 text-right">
                     <span class="text-subheading font-serif text-nawa-accent">{candidate.finalScore.toFixed(2)}</span>

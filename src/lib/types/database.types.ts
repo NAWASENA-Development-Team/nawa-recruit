@@ -196,6 +196,29 @@ export interface Database {
           updated_at?: string
         }
       }
+      video_scores: {
+        Row: {
+          id: string
+          candidate_id: string
+          score: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          candidate_id: string
+          score: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          candidate_id?: string
+          score?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       leaderboard_view: {
@@ -205,6 +228,8 @@ export interface Database {
           class: string
           score_stage_1: number
           score_stage_2: number
+          score_video: number
+          avg_stage_1_2: number
           final_score: number
           is_complete: boolean
         }

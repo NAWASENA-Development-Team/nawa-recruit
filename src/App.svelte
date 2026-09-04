@@ -12,6 +12,7 @@
   import PanitiaPenempatan from "./pages/panitia/Penempatan.svelte";
   import PanitiaSoal from "./pages/panitia/Soal.svelte";
   import PanitiaSeleksiTahap3 from "./pages/panitia/SeleksiTahap3.svelte";
+  import PanitiaVideoScoring from "./pages/panitia/VideoScoring.svelte";
   import ToastContainer from "./components/ToastContainer.svelte";
 
   const PUBLIC_ROUTES = ['/'];
@@ -58,6 +59,7 @@
     <Route path="/panitia/jadwal"><PanitiaJadwal /></Route>
     <Route path="/panitia/penempatan"><PanitiaPenempatan /></Route>
     <Route path="/panitia/seleksi-tahap-3"><PanitiaSeleksiTahap3 /></Route>
+    <Route path="/panitia/penilaian-video"><PanitiaVideoScoring /></Route>
     <Route path="/panitia/leaderboard"><PanitiaLeaderboard /></Route>
     <Route path="/panitia/leaderboard-final"><PanitiaLeaderboardFinal /></Route>
     <Route path="/penguji/dashboard"><DashboardPenguji /></Route>

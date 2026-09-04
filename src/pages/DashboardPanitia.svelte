@@ -205,6 +205,19 @@
         </div>
       </button>
 
+      <button type="button" class="group bg-white rounded-2xl p-6 border border-mist shadow-sm hover:shadow-md hover:border-fog transition-all flex flex-col h-full cursor-pointer relative overflow-hidden text-left w-full" onclick={() => navigate('/panitia/penilaian-video')}>
+        <div class="absolute right-0 top-0 w-24 h-24 bg-gradient-to-bl from-pink-50 to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
+        <div class="w-12 h-12 bg-linen rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        </div>
+        <h2 class="text-subheading text-graphite font-serif mb-2 group-hover:text-pink-600 transition-colors">Penilaian Video</h2>
+        <p class="text-caption text-ash mb-8 flex-grow leading-relaxed">Beri nilai untuk video presentasi kandidat. Nilai ini akan diakumulasi ke perhitungan akhir.</p>
+        <div class="flex items-center text-pink-600 text-body-sm font-bold">
+          Beri Nilai Video
+          <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </div>
+      </button>
+
     </div>
   </div>
 </div>
